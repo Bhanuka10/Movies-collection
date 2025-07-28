@@ -1,0 +1,28 @@
+import React from 'react'
+
+function Moviescart ({movies}) {
+    const onfavoriteclick = () => {
+        alert(`You have added ${movies.title} to your favorites!`)
+    }
+    
+  return (
+    <div className='movie-card'>
+        <div className='movie-poster'>
+            <img src={movies.url} alt={movies.title} />
+            <div className='movie-overlay'>
+                <button className='favorite-btn' onClick={onfavoriteclick}> ♥ </button>
+                
+            </div>
+            <div className='movie-info'>
+                <h3>{movies.title}</h3>
+                <p>{movies.release_date}</p>
+
+            </div>
+
+        </div>
+
+    </div>
+  )
+}
+
+export default Moviescart
