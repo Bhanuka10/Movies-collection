@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Moviescart from '../Component/Moviescart/Moviescart.jsx'
+import './Home.css';
 function Home() {
     const movies = [
         {id:1, title:"Johnwick", release_date:"2020"},
@@ -15,7 +16,7 @@ function Home() {
         }
     
   return (
-    <div className="Home">
+    <div className="home">
         <form onSubmit={handlesearch} className="search-form">
             <input type="text" 
             placeholder="Search for a movie..." 
@@ -26,7 +27,7 @@ function Home() {
             <button type='submit' className="search-button">Search</button>
        </form>
        
-      <div className="movie-grid">
+      <div className="movies-grid">
         {movies.map((movie)=> movie.title.toLowerCase().includes(searchquery.toLowerCase()) && (
             <Moviescart key={movie.id} movies={movie}/> 
             ))}

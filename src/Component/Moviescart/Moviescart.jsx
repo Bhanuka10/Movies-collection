@@ -1,4 +1,5 @@
 import React from 'react'
+import './Moviescart.css';
 
 function Moviescart ({movies}) {
     const onfavoriteclick = () => {
