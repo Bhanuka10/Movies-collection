@@ -9,14 +9,14 @@ function Moviescart ({movies}) {
   return (
     <div className='movie-card'>
         <div className='movie-poster'>
-            <img src={movies.url} alt={movies.title} />
+            <img src={`https://image.tmdb.org/t/p/w500${movies.poster_path}`} alt={movies.title} />
             <div className='movie-overlay'>
                 <button className='favorite-btn' onClick={onfavoriteclick}> ♥ </button>
                 
             </div>
             <div className='movie-info'>
                 <h3>{movies.title}</h3>
-                <p>{movies.release_date}</p>
+                <p>{movies.release_date?.split("-")[0]}</p>
 
             </div>
 

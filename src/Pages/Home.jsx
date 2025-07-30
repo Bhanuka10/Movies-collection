@@ -1,14 +1,31 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Moviescart from '../Component/Moviescart/Moviescart.jsx'
 import './Home.css';
+import { searchmovies, getpopularmovies } from '../Service/api.js';
 function Home() {
-    const movies = [
-        {id:1, title:"Johnwick", release_date:"2020"},
-        {id:2, title:"Avengers", release_date:"2019"},
-        {id:3, title:"Harry Potter", release_date:"2001"},
-        {id:4, title:"The Lord of the Rings", release_date:"2001"}
-    ]
+    const [movies, setMovies] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    useEffect(() => {
+      const loadpopularmovies = async () => {
+        try {
+          const popularmovies = await getpopularmovies();
+          setMovies(popularmovies);
+        } catch (error) {
+          console.error("Error fetching popular movies:", error);
+          setError("Failed to load popular movies.");
+        }
+        finally {
+          setLoading(false);
+        }
+      }
+      loadpopularmovies();
+      
+    }, []);
+
+
     const [searchquery, setSearchQuery] = useState("");
+    
 
         const handlesearch =() =>{
             alert(searchquery)
@@ -27,11 +44,15 @@ function Home() {
             <button type='submit' className="search-button">Search</button>
        </form>
        
-      <div className="movies-grid">
-        {movies.map((movie)=> movie.title.toLowerCase().includes(searchquery.toLowerCase()) && (
-            <Moviescart key={movie.id} movies={movie}/> 
-            ))}
-      </div>
+       {loading ? (
+         <div className="loading">Loading...</div>
+       ) : (
+         <div className="movies-grid">
+           {movies.map((movie) => movie.title.toLowerCase().includes(searchquery.toLowerCase()) && (
+               <Moviescart key={movie.id} movies={movie}/>
+           ))}
+         </div>
+       )}
     </div>
   )
 }
