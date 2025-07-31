@@ -27,10 +27,23 @@ function Home() {
     const [searchquery, setSearchQuery] = useState("");
     
 
-        const handlesearch =() =>{
-            alert(searchquery)
+        const handlesearch = async(e) =>{
+          e.preventDefault();
+          if(!searchquery.trim()) return;
+          if (loading) return;
+          setLoading(true);
+            try {
+              const searchresults = await searchmovies(searchquery);
+              setMovies(searchresults);
+            }
+            catch (error) {
+              console.error("Error searching movies:", error);
+            }
+            finally {
+              setLoading(false);
+            }
+          }
 
-        }
     
   return (
     <div className="home">
