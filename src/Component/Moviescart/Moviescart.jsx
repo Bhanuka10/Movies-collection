@@ -1,9 +1,18 @@
 import React from 'react'
 import './Moviescart.css';
+import { usemovieContext } from '../Context/Moviecontext';
 
 function Moviescart ({movies}) {
-    const onfavoriteclick = () => {
-        alert(`You have added ${movies.title} to your favorites!`)
+
+    const { isfavorite, addfavorite, removefavorite } = usemovieContext()
+    const favorite = isfavorite(movies.id) 
+    const onfavoriteclick = (e) => {
+        e.preventDefault()
+        if (favorite) {
+            removefavorite(movies.id)
+        } else {
+            addfavorite(movies)
+        }
     }
     
   return (
@@ -11,8 +20,8 @@ function Moviescart ({movies}) {
         <div className='movie-poster'>
             <img src={`https://image.tmdb.org/t/p/w500${movies.poster_path}`} alt={movies.title} />
             <div className='movie-overlay'>
-                <button className='favorite-btn' onClick={onfavoriteclick}> ♥ </button>
-                
+                <button className={`favorite-btn ${favorite ? 'active' : ''}`} onClick={onfavoriteclick}> ♥ </button>
+
             </div>
             <div className='movie-info'>
                 <h3>{movies.title}</h3>
